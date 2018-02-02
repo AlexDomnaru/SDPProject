@@ -1,11 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Business;
+using Data.Persistence;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Swashbuckle.AspNetCore.Swagger;
+using FluentValidation.AspNetCore;
+using AutoMapper;
 
 namespace Presentation
 {
@@ -21,12 +23,27 @@ namespace Presentation
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
+			//transient db stuff goes here
+	        services.AddTransient<IFormDbContext, FormDbContext>();
+	        services.AddTransient<IFormRepository, FormRepository>();
+	        services.AddDbContext<FormDbContext>(options =>
+				options.UseInMemoryDatabase("Forms"));
+
+	        services.AddMvc().AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<Startup>());
+
+	        services.AddAutoMapper();
+
+	        services.AddSwaggerGen(c =>
+		        c.SwaggerDoc("v1", new Info { Title = "Swagger page to test api", Version = "v1" }));
+
+			services.AddMvc();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+	        
+
             if (env.IsDevelopment())
             {
                 app.UseBrowserLink();
@@ -37,14 +54,15 @@ namespace Presentation
                 app.UseExceptionHandler("/Home/Error");
             }
 
-            app.UseStaticFiles();
+	        app.UseSwagger();
+	        app.UseSwaggerUI(c =>
+	        {
+		        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Test area");
+	        });
 
-            app.UseMvc(routes =>
-            {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
-            });
+			app.UseStaticFiles();
+
+            app.UseMvc();
         }
     }
 }
