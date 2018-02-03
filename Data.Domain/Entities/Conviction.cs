@@ -1,10 +1,10 @@
 ﻿using System;
 
-namespace Data.Domain
+namespace Data.Domain.Entities
 {
-	public class Conviction
+	public class Conviction : IEntity
 	{
-		public Guid ConvictionId { get; set; }
+		public Guid Id { get; set; }
 		public DateTime ConvictionDate { get; set; }
 		public string OffenceCode { get; set; }
 		public int PointsReceived { get; set; }

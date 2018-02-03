@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace Data.Domain
+namespace Data.Domain.Entities
 {
-    public class AboutYouForm
+    public class AboutYou : IEntity
     {
 	    public Guid Id { get; set; }
 	    public string Title { get; set; }

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Data.Domain
+namespace Data.Domain.Entities
 {
-    public class RiderDetailsForm
+    public class RiderDetails : IEntity
     {
 		public Guid Id { get; set; }
 	    public string OccupationType { get; set; }

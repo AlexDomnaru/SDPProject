@@ -1,8 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Threading;
+using System.Threading.Tasks;
+using Data.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace Data.Persistence
 {
-
 	public class FormDbContext : DbContext, IFormDbContext
 	{
 		public FormDbContext(DbContextOptions<FormDbContext> options): base((DbContextOptions) options)
@@ -10,7 +13,7 @@ namespace Data.Persistence
 		    
 	    }
 
-	    public DbSet<Data.Domain.AboutYouForm> AboutYouForms { get; set; }
-		public DbSet<Data.Domain.RiderDetailsForm> RiderDetailsForms { get; set; }
-    }
+	    public DbSet<AboutYou> AboutYouForms { get; set; }
+		public DbSet<RiderDetails> RiderDetailsForms { get; set; }
+	}
 }

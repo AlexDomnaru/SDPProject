@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Data.Domain;
+using Data.Domain.Entities;
 
 namespace Presentation.Models.Mappings
 {
@@ -7,7 +8,7 @@ namespace Presentation.Models.Mappings
     {
 	    public RiderDetailsProfile()
 	    {
-		    CreateMap<RiderDetailsModel, RiderDetailsForm>().ReverseMap();
+		    CreateMap<RiderDetailsModel, RiderDetails>().ReverseMap();
 	    }
     }
 }

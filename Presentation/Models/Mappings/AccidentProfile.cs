@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Data.Domain;
+using Data.Domain.Entities;
 
 namespace Presentation.Models.Mappings
 {

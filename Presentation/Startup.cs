@@ -8,6 +8,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Swagger;
 using FluentValidation.AspNetCore;
 using AutoMapper;
+using Business.Interfaces;
+using Business.Repositories;
+using Data.Domain.Entities;
 
 namespace Presentation
 {
@@ -24,8 +27,9 @@ namespace Presentation
         public void ConfigureServices(IServiceCollection services)
         {
 			//transient db stuff goes here
+	        services.AddTransient<IAboutYouRepository<AboutYou>, AboutYouRepository>();
+	        services.AddTransient<IRiderDetailsRepository<RiderDetails>, RiderDetailsRepository>();
 	        services.AddTransient<IFormDbContext, FormDbContext>();
-	        services.AddTransient<IFormRepository, FormRepository>();
 	        services.AddDbContext<FormDbContext>(options =>
 				options.UseInMemoryDatabase("Forms"));
 

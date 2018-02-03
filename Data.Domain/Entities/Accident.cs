@@ -1,10 +1,10 @@
 ﻿using System;
 
-namespace Data.Domain
+namespace Data.Domain.Entities
 {
-	public class Accident
+	public class Accident : IEntity
 	{
-		public Guid AccidentId { get; set; }
+		public Guid Id { get; set; }
 		public DateTime IncidentDate { get; set; }
 		public string Cause { get; set; }
 		public bool LiableForClaim { get; set; } = false;
