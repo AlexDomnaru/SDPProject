@@ -1,0 +1,101 @@
+﻿@using Presentation.Items
+@model AboutYouModel
+
+@{
+    ViewData["Title"] = "Get a Quote - The Bike Insurer";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<hr />
+<div class ="container">
+    <h3><span class="label">Your Details</span></h3>
+    <span class="label">Please note fields marked with '*' require an entry</span>
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <form method="post" asp-action="PersonalInformation1">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Title" class="control-label">Title *</label>
+                @Html.DropDownListFor(x => Model.Title, new SelectList(DropDownLists.Titles, "Value", "Text"), htmlAttributes: new { @class = "form-control", id = "Title" })
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FirstName" class="control-label">First name *</label>
+                <input asp-for="FirstName" class="form-control" />
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Surname" class="control-label">Surname *</label>
+                <input asp-for="Surname" class="form-control" />
+                <span asp-validation-for="Surname" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EmailAddress" class="control-label">Email address *</label>
+                <input asp-for="EmailAddress" class="form-control" />
+                <span asp-validation-for="EmailAddress" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PhoneNum" class="control-label">Mobile phone number *</label>
+                <input asp-for="PhoneNum" type="tel" maxlength="18" class="form-control" />
+                <span asp-validation-for="PhoneNum" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BirthDate" class="control-label">Date of birth *</label>
+                <input asp-for="BirthDate" class="form-control" />
+                <span asp-validation-for="BirthDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MaritalStatus" class="control-label">Marital status *</label>
+                @Html.DropDownListFor(x => Model.MaritalStatus, new SelectList(DropDownLists.MaritalStatus, "Value", "Text"), htmlAttributes: new { @class = "form-control", id = "Title"})
+                <span asp-validation-for="MaritalStatus" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PostCode" class="control-label">Postcode *</label>
+                <input asp-for="PostCode" class="form-control" />
+                <span asp-validation-for="PostCode" class="text-danger"></span>
+            </div>
+            <div class="container hidden">
+                <div class="form-group">
+                    <label asp-for="HouseNumberOrName" class="control-label">House number or name *</label>
+                    <input asp-for="HouseNumberOrName" class="form-control" />
+                    <span asp-validation-for="HouseNumberOrName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="StreetName" class="control-label">Street name *</label>
+                    <input asp-for="StreetName" class="form-control" />
+                    <span asp-validation-for="StreetName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Town" class="control-label">Town</label>
+                    <input asp-for="Town" class="form-control" />
+                    <span asp-validation-for="Town" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="City" class="control-label">City *</label>
+                    <input asp-for="City" class="form-control" />
+                    <span asp-validation-for="City" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="checkbox">
+                    <label>
+                        <input asp-for="HomeOwner" /> Home owner *r
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="ResidentSince" class="control-label">Resident Since *</label>
+                <input asp-for="ResidentSince" class="form-control" />
+                <span asp-validation-for="ResidentSince" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

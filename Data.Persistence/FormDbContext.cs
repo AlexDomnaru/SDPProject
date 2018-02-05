@@ -13,7 +13,7 @@ namespace Data.Persistence
 		    
 	    }
 
-	    public DbSet<AboutYou> AboutYouForms { get; set; }
-		public DbSet<RiderDetails> RiderDetailsForms { get; set; }
+	    public DbSet<Data.Domain.Entities.AboutYou> AboutYouForms { get; set; }
+		public DbSet<Data.Domain.Entities.RiderDetails> RiderDetailsForms { get; set; }
 	}
 }

@@ -1,4 +1,5 @@
-﻿using Business;
+﻿using System;
+using Business;
 using Data.Persistence;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -11,6 +12,7 @@ using AutoMapper;
 using Business.Interfaces;
 using Business.Repositories;
 using Data.Domain.Entities;
+using Presentation.Items;
 
 namespace Presentation
 {
@@ -30,17 +32,23 @@ namespace Presentation
 	        services.AddTransient<IAboutYouRepository<AboutYou>, AboutYouRepository>();
 	        services.AddTransient<IRiderDetailsRepository<RiderDetails>, RiderDetailsRepository>();
 	        services.AddTransient<IFormDbContext, FormDbContext>();
+	        services.AddDbContext<ContentDbContext>(options => options.UseInMemoryDatabase("Content"));
 	        services.AddDbContext<FormDbContext>(options =>
 				options.UseInMemoryDatabase("Forms"));
 
-	        services.AddMvc().AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<Startup>());
+	        services.AddTransient<DbSeeder>();
 
 	        services.AddAutoMapper();
 
-	        services.AddSwaggerGen(c =>
-		        c.SwaggerDoc("v1", new Info { Title = "Swagger page to test api", Version = "v1" }));
+	        services.AddMvc().AddSessionStateTempDataProvider();
 
-			services.AddMvc();
+	        services.AddDistributedMemoryCache();
+	        services.AddSession(options =>
+	        {
+		        options.IdleTimeout = TimeSpan.FromSeconds(1500);
+		        options.Cookie.Name = "Quote";
+		        options.Cookie.HttpOnly = true;
+	        });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -58,15 +66,14 @@ namespace Presentation
                 app.UseExceptionHandler("/Home/Error");
             }
 
-	        app.UseSwagger();
-	        app.UseSwaggerUI(c =>
-	        {
-		        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Test area");
-	        });
-
 			app.UseStaticFiles();
 
-            app.UseMvc();
-        }
+	        app.UseSession();
+
+			app.UseMvc(routes =>
+			{
+				routes.MapRoute("default", "{controller=Quote}/{action=PersonalInformation1}");
+			});
+		}
     }
 }

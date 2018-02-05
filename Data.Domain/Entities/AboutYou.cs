@@ -18,6 +18,6 @@ namespace Data.Domain.Entities
 	    public string Town { get; set; }
 	    public string City { get; set; }
 	    public bool HomeOwner { get; set; }
-	    public string ResidentSince { get; set; }
+	    public DateTime ResidentSince { get; set; }
 	}
 }

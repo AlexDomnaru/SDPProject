@@ -7,12 +7,11 @@ using Business.Interfaces;
 using Data.Domain.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Presentation.Items;
 using Presentation.Models;
 
 namespace Presentation.Controllers
 {
-    [Produces("application/json")]
-    [Route("api/Quote")]
     public class QuoteController : Controller
     {
 	    private readonly IMapper _mapper;
@@ -26,87 +25,48 @@ namespace Presentation.Controllers
 		    _riderDetailsRepo = riderDetailsRepo;
 	    }
 
-	    [HttpGet("all_about_you")]
-	    public async Task<IActionResult> GetAllAbtYou()
+	    [HttpGet]
+	    public async Task<IActionResult> PersonalInformation1()
 	    {
-		    var all = await _aboutYouRepo.GetAll();
-		    return Ok(all);
+		    if (!HttpContext.Session.Keys.Contains("QuoteId"))
+		    {
+			    return View("PersonalInformation1");
+		    }
+
+		    var id = HttpContext.Session.GetString("QuoteId");
+		    var entity = await _aboutYouRepo.GetById(Guid.Parse(id));
+		    var model = _mapper.Map<AboutYouModel>(entity);
+		    return View("PersonalInformation1", model);
 	    }
 
-	    [HttpGet("all_rider_details")]
-	    public async Task<IActionResult> GetAllRiderDetails()
-	    {
-		    var all = await _riderDetailsRepo.GetAll();
-		    return Ok(all);
-	    }
-
-		[HttpPost("add_about_you")]
-	    public async Task<IActionResult> AddAboutYouForm([FromBody] AboutYouModel model)
+	    [HttpPost]
+	    public IActionResult PersonalInformation1(AboutYouModel model)
 	    {
 		    if (!ModelState.IsValid)
 		    {
-			    return BadRequest();
+			    return View("Error");
 		    }
+
+		    
 
 		    var entity = _mapper.Map<AboutYou>(model);
-		    if (await _aboutYouRepo.Create(entity))
-		    {
-			    return Ok();
-		    }
-		    return BadRequest();
-	    }
-
-		[HttpGet("about_you_form/{id}")]
-		public async Task<IActionResult> GetAboutYouForm([FromRoute] Guid id)
-	    {
-		    if (!ModelState.IsValid)
-		    {
-			    return BadRequest();
-		    }
-
-		    if (!await _aboutYouRepo.Exists(id))
-		    {
-			    return BadRequest();
-		    }
-
-		    var entity = await _aboutYouRepo.GetById(id);
-		    var model = _mapper.Map<AboutYouModel>(entity);
-		    return Ok(model);
-	    }
-
-	    [HttpPost("add_rider_details")]
-	    public async Task<IActionResult> AddRiderDetailsForm([FromBody] RiderDetailsModel model)
-	    {
-		    if (!ModelState.IsValid)
-		    {
-			    return BadRequest();
-		    }
-
-		    var entity = _mapper.Map<RiderDetails>(model);
 		    entity.Id = Guid.NewGuid();
-		    if (await _riderDetailsRepo.Create(entity))
+			HttpContext.Session.SetString("QuoteId", entity.Id.ToString());
+
+		    try
 		    {
-			    return Ok();
+			    _aboutYouRepo.Create(entity);
 		    }
-		    return BadRequest();
+		    catch
+		    {
+			    return View("Error");
+		    }
+		    return RedirectToAction("PersonalInformation2");
 	    }
 
-	    [HttpGet("rider_details_form/{id}")]
-	    public async Task<IActionResult> GetRiderDetailsForm([FromRoute] Guid id)
+	    public IActionResult PersonalInformation2()
 	    {
-		    if (!ModelState.IsValid)
-		    {
-			    return BadRequest();
-		    }
-
-		    if (!await _riderDetailsRepo.Exists(id))
-		    {
-			    return BadRequest();
-		    }
-
-		    var entity = await _riderDetailsRepo.GetById(id);
-		    var model = _mapper.Map<RiderDetailsModel>(entity);
-		    return Ok(model);
+		    return View("PersonalInformation2");
 	    }
 
 	}

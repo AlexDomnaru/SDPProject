@@ -31,7 +31,6 @@ namespace Business.Repositories
 
 	    public async Task<bool> Create(AboutYou entity)
 	    {
-			entity.Id = Guid.NewGuid();
 		    _context.AboutYouForms.Add(entity);
 		    return (await _context.SaveChangesAsync() != 0);
 		}
