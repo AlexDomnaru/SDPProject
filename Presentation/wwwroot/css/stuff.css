@@ -19,3 +19,35 @@
     height: 100%;
     width: 30%;
 }
+
+.helper {
+    background-image: url(../images/help_icon.png);
+    background-size: contain;
+    height: 1em;
+    width: 1em;
+}
+
+.popup {
+    display: none;
+    height: 30px;
+    width: 290px;
+    margin-left: 10px;
+    float: right;
+}
+
+.popup>h5 {
+    font-family:monospace;
+    font-size: large;
+}
+
+#emailHelp:hover + #emailPopup {
+    display: block;
+}
+
+#postcodeHelp:hover + #postcodePopup {
+    display: block;
+}
+
+#residentSinceHelp:hover + #residentPopup {
+    display: block;
+}

@@ -22,7 +22,7 @@ namespace Presentation.Models
 	    public string EmailAddress { get; set; }
 
 		[Required(ErrorMessage = "Please enter your mobile phone number")]
-		[UkNumber]
+		[UkNumber(ErrorMessage = "Please enter a valid UK number")]
 	    public string PhoneNum { get; set; }
 
 		[Required(ErrorMessage = "Please enter your date of birth")]

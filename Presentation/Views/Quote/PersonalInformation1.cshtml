@@ -7,7 +7,7 @@
 }
 
 <hr />
-<div class ="container">
+<div class="container">
     <h3><span class="label">Your Details</span></h3>
     <span class="label">Please note fields marked with '*' require an entry</span>
 </div>
@@ -31,7 +31,14 @@
                 <span asp-validation-for="Surname" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="EmailAddress" class="control-label">Email address *</label>
+                <div class="container">
+                    <label asp-for="EmailAddress" class="control-label">Email address *</label>
+                    <img class="helper" id="emailHelp" />
+                    <div class="popup" id="emailPopup">
+                        <h5>Email Address</h5>
+                        <p>Please supply a valid email address so that we can your quote confirmation to you</p>
+                    </div>
+                </div>
                 <input asp-for="EmailAddress" class="form-control" />
                 <span asp-validation-for="EmailAddress" class="text-danger"></span>
             </div>
@@ -47,11 +54,18 @@
             </div>
             <div class="form-group">
                 <label asp-for="MaritalStatus" class="control-label">Marital status *</label>
-                @Html.DropDownListFor(x => Model.MaritalStatus, new SelectList(DropDownLists.MaritalStatus, "Value", "Text"), htmlAttributes: new { @class = "form-control", id = "Title"})
+                @Html.DropDownListFor(x => Model.MaritalStatus, new SelectList(DropDownLists.MaritalStatus, "Value", "Text"), htmlAttributes: new { @class = "form-control", id = "Title" })
                 <span asp-validation-for="MaritalStatus" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="PostCode" class="control-label">Postcode *</label>
+                <div class="container">
+                    <label asp-for="PostCode" class="control-label">Postcode *</label>
+                    <img class="helper" id="postcodeHelp" />
+                    <div class="popup" id="postcodePopup">
+                        <h5>Postcode</h5>
+                        <p>This should be your home address</p>
+                    </div>
+                </div>
                 <input asp-for="PostCode" class="form-control" />
                 <span asp-validation-for="PostCode" class="text-danger"></span>
             </div>
@@ -80,12 +94,20 @@
             <div class="form-group">
                 <div class="checkbox">
                     <label>
-                        <input asp-for="HomeOwner" /> Home owner *r
+                        <input asp-for="HomeOwner" /> Home owner *
                     </label>
                 </div>
             </div>
             <div class="form-group">
-                <label asp-for="ResidentSince" class="control-label">Resident Since *</label>
+                <div class="container">
+                    <label asp-for="ResidentSince" class="control-label">Resident Since *</label>
+                    <img class="helper" id="residentSinceHelp" />
+                    <div class="popup" id="residentPopup">
+                        <h5>Date of UK residency</h5>
+                        <p>If you have not been a UK resident since birth, please supply your date of residency</p>
+                    </div>
+                </div>
+
                 <input asp-for="ResidentSince" class="form-control" />
                 <span asp-validation-for="ResidentSince" class="text-danger"></span>
             </div>
@@ -98,4 +120,5 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="js/site.js"></script>
 }

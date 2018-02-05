@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 namespace Presentation.Models.Validators
 {
 	[AttributeUsage(AttributeTargets.Property | AttributeTargets.Field | AttributeTargets.Parameter)]
-	public class UkNumber : ValidationAttribute
+	public class UkNumber : ValidationAttribute, IClientModelValidator
 	{
 		public override bool IsValid(object value)
 		{
@@ -23,6 +23,16 @@ namespace Presentation.Models.Validators
 				new Regex(
 					"^(((\\+44\\s?\\d{4}|\\(?0\\d{4}\\)?)\\s?\\d{3}\\s?\\d{3})|((\\+44\\s?\\d{3}|\\(?0\\d{3}\\)?)\\s?\\d{3}\\s?\\d{4})|((\\+44\\s?\\d{2}|\\(?0\\d{2}\\)?)\\s?\\d{4}\\s?\\d{4}))(\\s?\\#(\\d{4}|\\d{3}))?$");
 			return ukNumRegex.IsMatch(number);
+		}
+
+		public void AddValidation(ClientModelValidationContext context)
+		{
+			if (context == null)
+			{
+				throw new ArgumentNullException(nameof(context));
+			}
+
+			context.Attributes.Add("data-val-uknumber", ErrorMessage);
 		}
 	}
 }
