@@ -1,54 +1,68 @@
-﻿@model RiderDetailsModel
+﻿@using Presentation.Items
+@model RiderDetailsModel
 
 @{
     ViewData["Title"] = "PersonalInformation2";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>PersonalInformation2</h2>
-
-<h4>RiderDetails</h4>
+<h2>Rider Details</h2>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="PersonalInformation2">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="OccupationType" class="control-label"></label>
-                <input asp-for="OccupationType" class="form-control" />
+                <label asp-for="OccupationType" class="control-label">Occupation Type *</label>
+                @Html.DropDownListFor(x => Model.OccupationType, new SelectList(DropDownLists.OccupationTypes, "Value", "Text"), htmlAttributes: new { @class = "form-control", oninput = "checkInput(this)" })
                 <span asp-validation-for="OccupationType" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Occupation" class="control-label"></label>
-                <input asp-for="Occupation" class="form-control" />
-                <span asp-validation-for="Occupation" class="text-danger"></span>
+            <div class="container hidden" id="hidden-occ-fields">
+                <div class="form-group hidden" id="occupations1">
+                    <label asp-for="Occupation" class="control-label">What is your occupation *</label>
+                    @Html.DropDownListFor(x => Model.Occupation, new SelectList(DropDownLists.EducationOccupations, "Value", "Text"), htmlAttributes: new { @class = "form-control", id = "occ-list" })
+                    <span asp-validation-for="Occupation" class="text-danger"></span>
+                </div>
+                <div class="form-group hidden" id="occupations2">
+                    <label asp-for="Occupation" class="control-label">What is your occupation *</label>
+                    <input asp-for="Occupation" class="form-control" id="occupationTags" />
+                    <span asp-validation-for="Occupation" class="text-danger"></span>
+                </div>
+                <div class="form-group" id="industries">
+                    <label asp-for="Industry" class="control-label">What industry do you work in *</label>
+                    <input asp-for="Industry" class="form-control" id="industryTags" />
+                    <span asp-validation-for="Industry" class="text-danger"></span>
+                </div>
             </div>
             <div class="form-group">
-                <label asp-for="Industry" class="control-label"></label>
-                <input asp-for="Industry" class="form-control" />
-                <span asp-validation-for="Industry" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="MotorcycleLicence" class="control-label"></label>
-                <input asp-for="MotorcycleLicence" class="form-control" />
+                <label asp-for="MotorcycleLicence" class="control-label">Type of motorcycle licence *</label>
+                @Html.DropDownListFor(x => Model.MotorcycleLicence, new SelectList(DropDownLists.LicenceType, "Value", "Text"), htmlAttributes: new { @class = "form-control" })
                 <span asp-validation-for="MotorcycleLicence" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="DateObtained" class="control-label"></label>
-                <input asp-for="DateObtained" class="form-control" />
+                <label asp-for="DateObtained" class="control-label"> Date obtained *</label>
+                <input asp-for="DateObtained" type="date" class="form-control" />
                 <span asp-validation-for="DateObtained" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <div class="checkbox">
                     <label>
-                        <input asp-for="HasLicence" /> @Html.DisplayNameFor(model => model.HasLicence)
+                        <input asp-for="HasLicence" />
+                        Licence not obtained yet
                     </label>
                 </div>
             </div>
             <div class="form-group">
-                <label asp-for="RidersInsured" class="control-label"></label>
-                <input asp-for="RidersInsured" class="form-control" />
+                <label asp-for="RidersInsured" class="control-label">Riders to be insured</label>
+                @Html.DropDownListFor(x => Model.RidersInsured, new SelectList(DropDownLists.RidersInsured, "Value", "Text"), htmlAttributes: new { @class = "form-control" })
                 <span asp-validation-for="RidersInsured" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Accidents" class="control-label">Accidents and claims</label>
+                <button type="button">Add Claim</button>
+            </div><div class="form-group">
+                <label asp-for="Convictions" class="control-label">Convictions</label>
+                <button type="button">Add Conviction</button>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-default" />
@@ -57,6 +71,11 @@
     </div>
 </div>
 
-@section Scripts {
+
+@section Scripts{
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="js/checkInput.js"></script>
+    <script src="lib/jquery-ui-1.12.1.custom/jquery-ui.js"></script>
+    <script src="js/autocompleteOccupations.js"></script>
+    <script src="js/autocompleteIndustry.js"></script>
 }

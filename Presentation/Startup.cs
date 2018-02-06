@@ -7,7 +7,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Swagger;
-using FluentValidation.AspNetCore;
 using AutoMapper;
 using Business.Interfaces;
 using Business.Repositories;
@@ -72,7 +71,7 @@ namespace Presentation
 
 			app.UseMvc(routes =>
 			{
-				routes.MapRoute("default", "{controller=Quote}/{action=PersonalInformation1}");
+				routes.MapRoute("default", "{controller=Quote}/{action=PersonalInformation2}");
 			});
 		}
     }

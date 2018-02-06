@@ -44,7 +44,7 @@ namespace Presentation.Controllers
 	    {
 		    if (!ModelState.IsValid)
 		    {
-			    return View("Error");
+			    return View("PersonalInformation1");
 		    }
 
 		    
@@ -64,10 +64,48 @@ namespace Presentation.Controllers
 		    return RedirectToAction("PersonalInformation2");
 	    }
 
-	    public IActionResult PersonalInformation2()
+		[HttpGet]
+	    public async Task<IActionResult> PersonalInformation2()
 	    {
-		    return View("PersonalInformation2");
+		    if (!HttpContext.Session.Keys.Contains("QuoteId2"))
+		    {
+			    return View("PersonalInformation2");
+		    }
+
+		    var id = HttpContext.Session.GetString("QuoteId");
+		    var entity = await _riderDetailsRepo.GetById(Guid.Parse(id));
+		    var model = _mapper.Map<RiderDetailsModel>(entity);
+			return View("PersonalInformation2", model);
 	    }
 
-	}
+	    [HttpPost]
+	    public IActionResult PersonalInformation2(RiderDetailsModel model)
+	    {
+		    if (!ModelState.IsValid)
+		    {
+			    return View("PersonalInformation2");
+		    }
+
+
+
+		    var entity = _mapper.Map<RiderDetails>(model);
+		    entity.Id = Guid.NewGuid();
+		    HttpContext.Session.SetString("QuoteId2", entity.Id.ToString());
+
+		    try
+		    {
+			    _riderDetailsRepo.Create(entity);
+		    }
+		    catch
+		    {
+			    return View("Error");
+		    }
+		    return RedirectToAction("TheEnd");
+	    }
+
+	    public IActionResult TheEnd()
+	    {
+		    return View("Yuss");
+	    }
+    }
 }

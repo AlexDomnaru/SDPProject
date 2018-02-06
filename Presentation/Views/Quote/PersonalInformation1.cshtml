@@ -57,7 +57,7 @@
                 @Html.DropDownListFor(x => Model.MaritalStatus, new SelectList(DropDownLists.MaritalStatus, "Value", "Text"), htmlAttributes: new { @class = "form-control", id = "Title" })
                 <span asp-validation-for="MaritalStatus" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group" id="postcodeForm">
                 <div class="container">
                     <label asp-for="PostCode" class="control-label">Postcode *</label>
                     <img class="helper" id="postcodeHelp" />
@@ -66,28 +66,35 @@
                         <p>This should be your home address</p>
                     </div>
                 </div>
-                <input asp-for="PostCode" class="form-control" />
+                <input asp-for="PostCode" id="code" class="form-control" />
+                <button type="button" onclick="searchPostcode()">Find My Address</button>
                 <span asp-validation-for="PostCode" class="text-danger"></span>
+                <div class="container hidden" id="warning-empty-pc">
+                    <div class="warning-message">
+                        <p>Sorry, we cannot seem to find your address based on the postcode entered. Please check the postcode you entered and try again, or</p>
+                        <button type="button" onclick="displayFields()">click here to enter your address manually</button>
+                    </div>
+                </div>
             </div>
-            <div class="container hidden">
+            <div class="container hidden" id="hidden-stuff">
                 <div class="form-group">
                     <label asp-for="HouseNumberOrName" class="control-label">House number or name *</label>
-                    <input asp-for="HouseNumberOrName" class="form-control" />
+                    <input id="housenum" asp-for="HouseNumberOrName" class="form-control" />
                     <span asp-validation-for="HouseNumberOrName" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="StreetName" class="control-label">Street name *</label>
-                    <input asp-for="StreetName" class="form-control" />
+                    <input id="street" asp-for="StreetName" class="form-control" />
                     <span asp-validation-for="StreetName" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="Town" class="control-label">Town</label>
-                    <input asp-for="Town" class="form-control" />
+                    <input id="town" asp-for="Town" class="form-control" />
                     <span asp-validation-for="Town" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="City" class="control-label">City *</label>
-                    <input asp-for="City" class="form-control" />
+                    <input id="city" asp-for="City" class="form-control" />
                     <span asp-validation-for="City" class="text-danger"></span>
                 </div>
             </div>
@@ -121,4 +128,6 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     <script src="js/site.js"></script>
+    <script src="js/searchPostcode.js"></script>
+    <script src="js/validateDate.js"></script>
 }

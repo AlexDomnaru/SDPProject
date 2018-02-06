@@ -1,10 +1,7 @@
 ﻿using System;
-using FluentValidation.Attributes;
-using Presentation.Models.Validators;
 
 namespace Presentation.Models
-{
-	[Validator(typeof(AccidentModelValidator))]
+{ 
 	public class AccidentModel
 	{
 		public DateTime IncidentDate { get; set; }

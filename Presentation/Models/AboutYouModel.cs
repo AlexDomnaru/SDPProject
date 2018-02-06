@@ -27,9 +27,11 @@ namespace Presentation.Models
 
 		[Required(ErrorMessage = "Please enter your date of birth")]
 		[DataType(DataType.Date)]
+		//[MinYear(1919, ErrorMessage = "Please enter a valid date")]
 	    public DateTime BirthDate { get; set; }
 
 		[Required(ErrorMessage = "Please enter your marital status")]
+		[MinLength(1, ErrorMessage = "Please enter your marital status")]
 	    public string MaritalStatus { get; set; }
 
 		[Required(ErrorMessage = "Please enter your postcode and click the find button")]
@@ -51,6 +53,7 @@ namespace Presentation.Models
 
 		[Required(ErrorMessage = "Please enter how long you have been resident in the UK")]
 		[DataType(DataType.Date)]
-	    public DateTime ResidentSince { get; set; }
+		[MinYear(1919, ErrorMessage = "Please enter a valid date")]
+		public DateTime ResidentSince { get; set; }
 	}
 }
