@@ -23,7 +23,7 @@ interact with the database context from the previous layer, and their respective
 ### 4. Presentation  
 The presentation layer contains all that's required to manage the interaction between the user and the database. 
 That is, the views, the models that are used by the views, the controllers, and other classes that are used by them.
-
+***
 #### 4.1 Models  
 Models used in this project are contained here, as well as any model helper class
 (such as the profiles used to map the model to its respective entity in the database).
@@ -39,7 +39,7 @@ The [HttpPost] methods handle the forms posted from the views. If the form poste
 If the form contains errors, then the same view with the errors is returned.
 
 #### 4.3 Views
-------------------------------
+***
 ##### 4.3.1 PersonalInformation1
 This view uses the AboutYouModel as model, and it features client side validation for the required fields, as well as custom phone number validation.
 There's also the "Find My Address" button, which takes the postcode input by the user and checks whether it is a valid postcode (theoretically, this function
