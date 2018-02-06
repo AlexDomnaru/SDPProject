@@ -44,7 +44,7 @@ namespace Presentation
 	        services.AddDistributedMemoryCache();
 	        services.AddSession(options =>
 	        {
-		        options.IdleTimeout = TimeSpan.FromSeconds(1500);
+		        options.IdleTimeout = TimeSpan.FromSeconds(1800);
 		        options.Cookie.Name = "Quote";
 		        options.Cookie.HttpOnly = true;
 	        });
