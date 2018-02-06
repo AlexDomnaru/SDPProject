@@ -71,7 +71,7 @@ namespace Presentation
 
 			app.UseMvc(routes =>
 			{
-				routes.MapRoute("default", "{controller=Quote}/{action=PersonalInformation2}");
+				routes.MapRoute("default", "{controller=Quote}/{action=PersonalInformation1}");
 			});
 		}
     }
