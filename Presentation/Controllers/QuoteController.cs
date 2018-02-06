@@ -72,7 +72,7 @@ namespace Presentation.Controllers
 			    return View("PersonalInformation2");
 		    }
 
-		    var id = HttpContext.Session.GetString("QuoteId");
+		    var id = HttpContext.Session.GetString("QuoteId2");
 		    var entity = await _riderDetailsRepo.GetById(Guid.Parse(id));
 		    var model = _mapper.Map<RiderDetailsModel>(entity);
 			return View("PersonalInformation2", model);
